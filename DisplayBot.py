@@ -1,9 +1,12 @@
 import discord
 import secret
+import os
 
 class DisplayBot(discord.Client):
     async def on_ready(self):
         self.takingImages = True
+        self.command = "led-image-viewer"
+        self.imageIsBeingDisplayed = False
         print("ONLINE")
 
     async def on_message(self, message):
@@ -21,8 +24,13 @@ class DisplayBot(discord.Client):
             self.takingImages = True
             await message.channel.send("Image submissions are open!")
 
-        print(message.content)
+        if message.content == "!clear":
+            if self.imageIsBeingDisplayed:
+                os.system(f"/bin/kill -9 $(pidof {self.command}")
+                await message.channel.send("64x64 LED Matrix has been successfully cleared!")
 
+            else:
+                await message.channel.send("Nothing is being displayed on the 64x64 LED Matrix")
         
 
 if __name__ == "__main__":
