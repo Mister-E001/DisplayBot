@@ -26,7 +26,7 @@ class DisplayBot(discord.Client):
 
         if message.content == "!clear":
             if self.imageIsBeingDisplayed:
-                os.system(f"/bin/kill -2 $(pidof {self.command}")
+                os.system(f"/bin/kill -2 $(pidof {self.command})")
                 await message.channel.send("64x64 LED Matrix has been successfully cleared!")
 
             else:
